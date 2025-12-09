@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://cfm0g7oswmom0"]
+
+[ext_resource type="Script" uid="uid://vqfyjrwf6g0n" path="res://scripts/drawavgcircle.gd" id="1_tu1tw"]
+[ext_resource type="Script" uid="uid://cbttvsyj5d6uw" path="res://scripts/averagejoe.gd" id="1_yjgip"]
+[ext_resource type="Script" uid="uid://c1qre7wraa0js" path="res://scripts/idle.gd" id="3_unhuu"]
+[ext_resource type="Script" uid="uid://dmgedjdt2io0d" path="res://scripts/averagejoechase.gd" id="4_scj7r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uep0n"]
+radius = 50.0
+
+[sub_resource type="GDScript" id="GDScript_0cweq"]
+script/source = "extends Node
+@onready var idle: Node = $idle
+@onready var chase: Node = $chase
+var currentstate: Node
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	currentstate = idle
+	idle.ENTER()
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta: float) -> void:
+	currentstate.UPDATE(delta)
+
+func changestateto(state):
+	currentstate.EXIT()
+	currentstate = state
+	currentstate.ENTER()
+	
+"
+
+[node name="averagecircle" type="CharacterBody2D" groups=["averagejoe"]]
+script = ExtResource("1_yjgip")
+
+[node name="drawcircle" type="Node2D" parent="."]
+script = ExtResource("1_tu1tw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_uep0n")
+
+[node name="statecontroller" type="Node" parent="."]
+script = SubResource("GDScript_0cweq")
+
+[node name="idle" type="Node" parent="statecontroller"]
+script = ExtResource("3_unhuu")
+
+[node name="chase" type="Node" parent="statecontroller"]
+script = ExtResource("4_scj7r")

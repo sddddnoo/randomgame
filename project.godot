@@ -15,6 +15,15 @@ run/main_scene="uid://cdli8s1p0vy2e"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globalplayerstate="*res://scripts/globalplayerstate.gd"
+
+[global_group]
+
+averagejoe=""
+player=""
+
 [input]
 
 ui_left={
