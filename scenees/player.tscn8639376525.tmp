@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhq7pllpby7ay"]
+
+[ext_resource type="Script" uid="uid://bcw1ntky0qot4" path="res://scripts/circledrawn.gd" id="1_2noyp"]
+[ext_resource type="Script" uid="uid://bbwqp8uctn6ng" path="res://scripts/movement.gd" id="1_yxxe1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2noyp"]
+radius = 102.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2noyp"]
+size = Vector2(141.5, 141.5)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_yxxe1")
+
+[node name="circle" type="Node2D" parent="."]
+rotation = -0.7853982
+scale = Vector2(0.99999994, 0.99999994)
+script = ExtResource("1_2noyp")
+
+[node name="circlecol" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2noyp")
+disabled = true
+
+[node name="squarecol" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_2noyp")
