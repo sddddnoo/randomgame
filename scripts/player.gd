@@ -2,13 +2,16 @@ extends CharacterBody2D
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 var startpos: Vector2
-var SPEED: int # horizontal movement speed
-var JUMP_VELOCITY: int # jump speed
+var SPEED: float # horizontal movement speed
+var JUMP_VELOCITY: float # jump speed
 var varjump: bool
+var bulletspawn := preload("res://scenees/bullet.tscn")
+var cooldowntimer: float
+var timer_reset: bool = false
 func _ready() -> void:
 	Globalplayerstate.shapeshifting = false
 	startpos = global_position
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("changeshape"): #if player wants to be circle
 		Globalplayerstate.shapeshifting = true # globally means that player is now a circle
 		animated_sprite_2d.play("SWITCH")
@@ -18,17 +21,20 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	if Globalplayerstate.shapeshifting:
-		JUMP_VELOCITY = -300
-		SPEED = 400
+		JUMP_VELOCITY = -800
+		SPEED = 600
 	else:
-		SPEED = 1000.0
-		JUMP_VELOCITY = -800.0
+		SPEED = 2000.0
+		JUMP_VELOCITY = -1500.0
 	move_and_slide()
 	jump()
 	basicmove()
 	gravity(delta)
 	updatepos()
 	collidewithenemy()
+	spawnbullet(delta)
+	if timer_reset:
+		startbulletcooldown(delta)
 func gravity(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta # applies gravity
@@ -46,20 +52,34 @@ func basicmove():
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * SPEED
+	Globalplayerstate.playerdirection = Input.get_axis("ui_left", "ui_right")
+	if Globalplayerstate.playerdirection:
+		velocity.x = Globalplayerstate.playerdirection * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		
 func updatepos():
 	Globalplayerstate.playerposition = global_position
-
-
+	
+func spawnbullet(delta):
+	if Input.is_action_just_pressed("attack") and Globalplayerstate.playerdirection != 0 and !timer_reset:
+		var bullet = bulletspawn.instantiate()
+		timer_reset = true
+		cooldowntimer = 1
+		add_child(bullet)
+		
+func startbulletcooldown(delta):
+	print(cooldowntimer)
+	if cooldowntimer > 0:
+		cooldowntimer -= delta
+	else:
+		timer_reset = false
 	
 func collidewithenemy():
 	var count_col = get_slide_collision_count()
 	for i in range(count_col):
-		var collider = get_slide_collision(i).get_collider()
-		if collider.is_in_group("enemy"):
-			global_position = startpos
+		var collider := get_slide_collision(i)
+		var collision = collider.get_collider()
+		if collision.is_in_group("enemy") and collision	:
+			if get_tree():
+				get_tree().reload_current_scene() # used to be global_position = startpos

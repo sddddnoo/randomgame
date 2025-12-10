@@ -13,7 +13,6 @@ func UPDATE(delta):
 	direction = sign(Globalplayerstate.playerposition.x - averagecircle.global_position.x)
 	averagecircle.velocity.x = direction*movespeed
 	if Globalplayerstate.shapeshifting:
-		print(forgettimer)
 		if forgettimer > 0:
 			forgettimer -= delta
 		else:
