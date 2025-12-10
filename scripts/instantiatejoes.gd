@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 		spawn_timer = 1
 		numtime += 0.25
 		for i in range(1): # was supposed to be int(numtime) but made it 1 cuz it gets too crowded and hard to move
-			var randcoord = Vector2(randi_range(-10000,10000),-800) # y- axis: -10000 or 10000 random num and -800 on x axis
+			var randcoord = Vector2(randi_range(-4000,4000),-800) # y- axis: -10000 or 10000 random num and -800 on x axis
 			addenemy(randcoord)
 
 func addenemy(pos):

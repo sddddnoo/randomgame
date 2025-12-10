@@ -3,17 +3,20 @@ extends Node
 @onready var statecontroller: Node = $".."
 @onready var chase: Node = $"../chase"
 @onready var averagecircle: CharacterBody2D = $"../.."
-var movespeed = randi_range(800,1000)
-var direction: Vector2
+var forgettimer = randf_range(2,5)
+var startpos: Vector2
+var movespeed = randi_range(500,900)
+var direction
 func ENTER():
-	Globalplayerstate.averagejoeishostile = true # globally now i know when the average joe hates the player for beinga  square
-	print("state changed to chase satate")
+	averagecircle.add_to_group("enemy")
 func UPDATE(delta):
-	if !Globalplayerstate.shapeshifting:
-		direction = (Globalplayerstate.playerposition - averagecircle.global_position).normalized()
-		averagecircle.velocity = direction*movespeed
-	else:
-		Globalplayerstate.averagejoeishostile = false
-		statecontroller.changestateto(idle)
+	direction = sign(Globalplayerstate.playerposition.x - averagecircle.global_position.x)
+	averagecircle.velocity.x = direction*movespeed
+	if Globalplayerstate.shapeshifting:
+		print(forgettimer)
+		if forgettimer > 0:
+			forgettimer -= delta
+		else:
+			statecontroller.changestateto(idle)
 func EXIT():
 	pass

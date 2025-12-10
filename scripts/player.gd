@@ -1,10 +1,13 @@
 extends CharacterBody2D
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-
+var startpos: Vector2
 var SPEED: int # horizontal movement speed
 var JUMP_VELOCITY: int # jump speed
 var varjump: bool
+func _ready() -> void:
+	Globalplayerstate.shapeshifting = false
+	startpos = global_position
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("changeshape"): #if player wants to be circle
 		Globalplayerstate.shapeshifting = true # globally means that player is now a circle
@@ -16,16 +19,16 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if Globalplayerstate.shapeshifting:
 		JUMP_VELOCITY = -300
-		SPEED = 100
+		SPEED = 400
 	else:
-		SPEED = 300.0
+		SPEED = 1000.0
 		JUMP_VELOCITY = -800.0
 	move_and_slide()
 	jump()
 	basicmove()
 	gravity(delta)
 	updatepos()
-
+	collidewithenemy()
 func gravity(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta # applies gravity
@@ -51,4 +54,12 @@ func basicmove():
 		
 func updatepos():
 	Globalplayerstate.playerposition = global_position
+
+
 	
+func collidewithenemy():
+	var count_col = get_slide_collision_count()
+	for i in range(count_col):
+		var collider = get_slide_collision(i).get_collider()
+		if collider.is_in_group("enemy"):
+			global_position = startpos

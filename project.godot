@@ -21,8 +21,8 @@ Globalplayerstate="*res://scripts/globalplayerstate.gd"
 
 [global_group]
 
-averagejoe=""
 player=""
+enemy=""
 
 [input]
 
