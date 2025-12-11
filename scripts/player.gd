@@ -8,6 +8,7 @@ var varjump: bool
 var bulletspawn := preload("res://scenees/bullet.tscn")
 var cooldowntimer: float
 var timer_reset: bool = false
+var direction: float
 func _ready() -> void:
 	Globalplayerstate.shapeshifting = false
 	startpos = global_position
@@ -37,7 +38,7 @@ func _physics_process(delta: float) -> void:
 		startbulletcooldown(delta)
 func gravity(delta):
 	if not is_on_floor():
-		velocity += get_gravity() * delta # applies gravity
+		velocity += get_gravity() * delta * 2# applies gravity
 
 func jump():
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -52,24 +53,25 @@ func basicmove():
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	Globalplayerstate.playerdirection = Input.get_axis("ui_left", "ui_right")
-	if Globalplayerstate.playerdirection:
-		velocity.x = Globalplayerstate.playerdirection * SPEED
+	direction = Input.get_axis("ui_left", "ui_right")
+	if direction:
+		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		
+	if direction != 0:
+		Globalplayerstate.lastdirection = direction
 func updatepos():
 	Globalplayerstate.playerposition = global_position
 	
 func spawnbullet(delta):
-	if Input.is_action_just_pressed("attack") and Globalplayerstate.playerdirection != 0 and !timer_reset:
+	if Input.is_action_just_pressed("attack") and !timer_reset:
 		var bullet = bulletspawn.instantiate()
 		timer_reset = true
-		cooldowntimer = 1
-		add_child(bullet)
+		cooldowntimer = 0.3
+		bullet.global_position = global_position
+		get_tree().current_scene.add_child(bullet)
 		
 func startbulletcooldown(delta):
-	print(cooldowntimer)
 	if cooldowntimer > 0:
 		cooldowntimer -= delta
 	else:
@@ -83,3 +85,4 @@ func collidewithenemy():
 		if collision.is_in_group("enemy") and collision	:
 			if get_tree():
 				get_tree().reload_current_scene() # used to be global_position = startpos
+				Globalplayerstate.wavestage = 1

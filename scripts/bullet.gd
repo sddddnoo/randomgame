@@ -1,15 +1,17 @@
 extends Area2D
 var movespeed = 5000
-var direction : float
 var timer: float = 1
+var direction: Vector2
 func _ready() -> void:
-	direction = Globalplayerstate.playerdirection
+	print("bullet spawned")
+	direction = get_local_mouse_position().normalized()
+	rotate(direction.angle())
 func _process(delta: float) -> void:
 	if timer > 0:
 		timer -= delta
 	else:
 		queue_free()
-	position.x += movespeed*direction*delta
+	position += movespeed*direction*delta
 
 
 func _on_body_entered(body: Node2D) -> void:

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cr46csyj5skvh" path="res://scripts/bullet.gd" id="1_srtee"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_py2s0"]
-size = Vector2(78, 46)
+size = Vector2(40, 24)
 
 [node name="bullet" type="Area2D"]
 script = ExtResource("1_srtee")
@@ -14,13 +14,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -39.0
-offset_top = -23.0
-offset_right = 39.0
-offset_bottom = 23.0
+offset_left = -20.0
+offset_top = -12.0
+offset_right = 20.0
+offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0.19215687, 0, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_py2s0")

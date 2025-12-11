@@ -31,7 +31,7 @@ func changestateto(state):
 	
 "
 
-[node name="averagecircle" type="CharacterBody2D"]
+[node name="averagecircle" type="CharacterBody2D" groups=["averagejoe"]]
 script = ExtResource("1_yjgip")
 
 [node name="drawcircle" type="Node2D" parent="."]

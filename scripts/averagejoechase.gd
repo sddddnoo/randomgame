@@ -2,13 +2,16 @@ extends Node
 @onready var idle: Node = $"../idle"
 @onready var statecontroller: Node = $".."
 @onready var chase: Node = $"../chase"
+@onready var drawcircle: Node2D = $"../../drawcircle"
+
 @onready var averagecircle: CharacterBody2D = $"../.."
 var forgettimer = randf_range(2,5)
 var startpos: Vector2
-var movespeed = randi_range(500,900)
+var movespeed = randi_range(300,500)
 var direction
 func ENTER():
 	averagecircle.add_to_group("enemy")
+	drawcircle.color = "RED"
 func UPDATE(delta):
 	direction = sign(Globalplayerstate.playerposition.x - averagecircle.global_position.x)
 	averagecircle.velocity.x = direction*movespeed

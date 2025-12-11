@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://dhq7pllpby7ay" path="res://scenees/player.tscn" id="1_8iesj"]
 [ext_resource type="Script" uid="uid://cmd2ojinwli4u" path="res://scripts/instantiatejoes.gd" id="1_i6i1s"]
+[ext_resource type="PackedScene" uid="uid://kyq27d544gus" path="res://scenees/bullet.tscn" id="3_i135c"]
 [ext_resource type="Script" uid="uid://djsqin3g5nbgh" path="res://scripts/score.gd" id="4_84jpq"]
-[ext_resource type="AudioStream" uid="uid://c3rsct2eq34e2" path="res://audio/stage complete.mp3" id="6_vpb12"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8iesj"]
 size = Vector2(8628, 5275)
@@ -41,6 +41,9 @@ color = Color(0.44909275, 0.22356114, 0, 1)
 [node name="player" parent="." instance=ExtResource("1_8iesj")]
 position = Vector2(-118, -72)
 
+[node name="bullet" parent="." instance=ExtResource("3_i135c")]
+position = Vector2(199, -1234)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
@@ -51,5 +54,7 @@ theme_override_font_sizes/font_size = 100
 text = "0"
 script = ExtResource("4_84jpq")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_vpb12")
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.1, 0.1)
+position_smoothing_enabled = true
+position_smoothing_speed = 15.0
