@@ -28,9 +28,9 @@ func _physics_process(delta: float) -> void:
 		SPEED = 2000.0
 		JUMP_VELOCITY = -1500.0
 	move_and_slide()
-	jump()
+	#jump()
 	basicmove()
-	gravity(delta)
+	#gravity(delta)
 	updatepos()
 	collidewithenemy()
 	spawnbullet(delta)
@@ -50,14 +50,12 @@ func jump():
 		velocity.y += varjumpforce
 		
 func basicmove():
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	direction = Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+	var normaldirection = Vector2.ZERO
+	normaldirection.x = Input.get_axis("ui_left", "ui_right")
+	normaldirection.y = Input.get_axis("ui_up","ui_down")
+	velocity = normaldirection.normalized()*SPEED
+	
+		
 	if direction != 0:
 		Globalplayerstate.lastdirection = direction
 func updatepos():
@@ -86,3 +84,4 @@ func collidewithenemy():
 			if get_tree():
 				get_tree().reload_current_scene() # used to be global_position = startpos
 				Globalplayerstate.wavestage = 1
+				Bgmusic.get_child(0).pitch_scale = 1

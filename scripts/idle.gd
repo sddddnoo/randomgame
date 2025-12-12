@@ -4,28 +4,20 @@ extends Node
 @onready var averagecircle: CharacterBody2D = $"../.."
 @onready var rightrc: RayCast2D = $"../../rightrc"
 @onready var leftrc: RayCast2D = $"../../leftrc"
-@onready var bottomright: RayCast2D = $"../../bottomright"
-@onready var bottomleft: RayCast2D = $"../../bottomleft"
+@onready var downrc: RayCast2D = $"../../downrc"
+@onready var uprc: RayCast2D = $"../../uprc"
+
 @onready var drawcircle: Node2D = $"../../drawcircle"
 
-var direction: int
+var direction: Vector2 
 var movespeed = 400
 func ENTER():
 	drawcircle.color = "GREEN"
 	if averagecircle.is_in_group("enemy"):
 		averagecircle.remove_from_group("enemy")
-	if randf() > 0.5:
-		direction = 1
-	else:
-		direction = -1
 func UPDATE(delta):
-	if rightrc.is_colliding() or !bottomright.is_colliding():
-		direction = -1
-		movespeed = randi_range(300,500)
-	elif leftrc.is_colliding() or !bottomleft.is_colliding():
-		direction = 1
-		movespeed = randi_range(300,500)
-	averagecircle.velocity.x = direction*movespeed
+	direction += Vector2(randf_range(-1,1),randf_range(-1,1))
+	averagecircle.velocity = direction.normalized()*movespeed
 	var updatedist = (averagecircle.global_position - Globalplayerstate.playerposition)
 	if updatedist.length() < 800 and !Globalplayerstate.shapeshifting:
 		statecontroller.changestateto(chase)

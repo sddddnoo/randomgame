@@ -13,8 +13,8 @@ func ENTER():
 	averagecircle.add_to_group("enemy")
 	drawcircle.color = "RED"
 func UPDATE(delta):
-	direction = sign(Globalplayerstate.playerposition.x - averagecircle.global_position.x)
-	averagecircle.velocity.x = direction*movespeed
+	direction = (Globalplayerstate.playerposition - averagecircle.global_position).normalized()
+	averagecircle.velocity = direction*movespeed
 	if Globalplayerstate.shapeshifting:
 		if forgettimer > 0:
 			forgettimer -= delta

@@ -11,13 +11,14 @@ func _ready() -> void:
 	else:
 		randcoord = Vector2(randright,-100)
 	addenemy(randcoord)
+	Bgmusic.play()
 func _process(delta: float) -> void:
-	if !get_tree().get_first_node_in_group("averagejoe"):
-		$AudioStreamPlayer.play()
+	if get_tree().get_first_node_in_group("averagejoe"):
+		$vicotry.play()
 		Globalplayerstate.wavestage += 1
 		for i in range(int(increasewave)): 
 			increasewave += 0.25
-			randcoord = Vector2(randi_range(-4000,4000),-100) # y- axis: -10000 or 10000 random num and -800 on x axis
+			randcoord = Vector2(randi_range(-4000,4000),randi_range(-2000,2000)) # y- axis: -10000 or 10000 random num and -800 on x axis
 			farfromplayer = Globalplayerstate.playerposition - randcoord
 			if farfromplayer.length() > 500:
 				addenemy(randcoord)

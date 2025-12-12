@@ -2,8 +2,9 @@ extends Area2D
 var movespeed = 5000
 var timer: float = 1
 var direction: Vector2
+@onready var kill: AudioStreamPlayer = $kill
+
 func _ready() -> void:
-	print("bullet spawned")
 	direction = get_local_mouse_position().normalized()
 	rotate(direction.angle())
 func _process(delta: float) -> void:
@@ -17,3 +18,5 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy"):
 		body.queue_free()
+		Bgmusic.get_child(0).pitch_scale += 0.1
+		Bgmusic.get_child(0).play()
