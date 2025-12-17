@@ -4,3 +4,4 @@ var playerposition: Vector2 # global position of player
 var playerstartposition: Vector2 # position at the start of the scene
 var lastdirection: float = 1
 var wavestage: int = 1
+var abilitybar: float = 0

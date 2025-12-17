@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://dhq7pllpby7ay"]
+[gd_scene load_steps=11 format=3 uid="uid://dhq7pllpby7ay"]
 
 [ext_resource type="Texture2D" uid="uid://clauwab1i3x3r" path="res://resourceses/bitmap.png" id="1_2noyp"]
 [ext_resource type="Script" uid="uid://ie1jafntexbt" path="res://scripts/player.gd" id="1_yxxe1"]
-[ext_resource type="Script" uid="uid://dvlmvksu27m3f" path="res://scripts/camera_2d.gd" id="3_howkd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2noyp"]
 atlas = ExtResource("1_2noyp")
@@ -74,6 +73,5 @@ sprite_frames = SubResource("SpriteFrames_m3hx4")
 shape = SubResource("CircleShape2D_2noyp")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.1, 0.1)
+zoom = Vector2(0.2, 0.2)
 position_smoothing_speed = 15.0
-script = ExtResource("3_howkd")

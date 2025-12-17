@@ -7,6 +7,7 @@ var direction: Vector2
 func _ready() -> void:
 	direction = get_local_mouse_position().normalized()
 	rotate(direction.angle())
+	Globalplayerstate.abilitybar -= 1 # removes percentage for each bullet
 func _process(delta: float) -> void:
 	if timer > 0:
 		timer -= delta
@@ -17,6 +18,7 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy"):
-		body.queue_free()
-		Bgmusic.get_child(0).pitch_scale += 0.1
+		body.queue_free() # kills teh enemy
+		Globalplayerstate.abilitybar += 2 # adds percentage for each bullet hit
 		Bgmusic.get_child(0).play()
+		

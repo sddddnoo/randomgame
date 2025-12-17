@@ -1,4 +1,6 @@
 extends CharacterBody2D
+@onready var collision_shape_2d_2: CollisionShape2D = $CollisionShape2D2
+@onready var camera_2d: Camera2D = $Camera2D
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 var startpos: Vector2
@@ -34,6 +36,7 @@ func _physics_process(delta: float) -> void:
 	updatepos()
 	collidewithenemy()
 	spawnbullet(delta)
+	sd*changesizewithbar()
 	if timer_reset:
 		startbulletcooldown(delta)
 func gravity(delta):
@@ -85,3 +88,12 @@ func collidewithenemy():
 				get_tree().reload_current_scene() # used to be global_position = startpos
 				Globalplayerstate.wavestage = 1
 				Bgmusic.get_child(0).pitch_scale = 1
+func changesizewithbar():
+	var changesize: Vector2
+	var scale: float = (Globalplayerstate.abilitybar)/30
+	var camerascale: Vector2 = Vector2(0.1/scale,0.1/scale)
+	changesize.x = scale
+	changesize.y = changesize.x
+	self.scale = changesize
+	collision_shape_2d_2.scale = changesize
+	camera_2d.zoom = camerascale

@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cdli8s1p0vy2e"]
+[gd_scene load_steps=8 format=3 uid="uid://cdli8s1p0vy2e"]
 
 [ext_resource type="PackedScene" uid="uid://dhq7pllpby7ay" path="res://scenees/player.tscn" id="1_8iesj"]
 [ext_resource type="Script" uid="uid://cmd2ojinwli4u" path="res://scripts/instantiatejoes.gd" id="1_i6i1s"]
 [ext_resource type="Script" uid="uid://djsqin3g5nbgh" path="res://scripts/score.gd" id="4_84jpq"]
+[ext_resource type="PackedScene" uid="uid://dpduwnvmeoy3p" path="res://scenees/abilitymeter.tscn" id="5_fvl3g"]
 [ext_resource type="AudioStream" uid="uid://c3rsct2eq34e2" path="res://audio/stage complete.mp3" id="6_vpb12"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_84jpq"]
@@ -20,10 +21,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -4312.0
-offset_top = -2419.5
-offset_right = 4312.0
-offset_bottom = 2419.5
+offset_left = -1889.0
+offset_top = -1237.0
+offset_right = 1889.0
+offset_bottom = 1237.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.6706898, 0.6706894, 0.6706893, 1)
@@ -48,16 +49,22 @@ volume_db = -11.801
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -1200)
 shape = SubResource("WorldBoundaryShape2D_84jpq")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(2500, 0)
 rotation = 1.5707964
 shape = SubResource("WorldBoundaryShape2D_fvl3g")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 1200)
 rotation = -3.1415927
 shape = SubResource("WorldBoundaryShape2D_84jpq")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-2500, 0)
 rotation = -1.5707964
 shape = SubResource("WorldBoundaryShape2D_fvl3g")
+
+[node name="abilitymeter" parent="." instance=ExtResource("5_fvl3g")]

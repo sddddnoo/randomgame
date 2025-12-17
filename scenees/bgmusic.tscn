@@ -5,8 +5,10 @@
 
 [node name="bgmusic" type="AudioStreamPlayer"]
 stream = ExtResource("1_j4y5x")
+volume_db = -80.0
 autoplay = true
 
 [node name="kill" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_0ash6")
 volume_db = -10.0
+bus = &"pitch"
