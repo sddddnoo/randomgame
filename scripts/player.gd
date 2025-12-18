@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 	updatepos()
 	collidewithenemy()
 	spawnbullet(delta)
-	sd*changesizewithbar()
+	changesizewithbar()
 	if timer_reset:
 		startbulletcooldown(delta)
 func gravity(delta):
@@ -82,12 +82,14 @@ func collidewithenemy():
 	var count_col = get_slide_collision_count()
 	for i in range(count_col):
 		var collider := get_slide_collision(i)
+		var oncecollide = false
 		var collision = collider.get_collider()
-		if collision.is_in_group("enemy") and collision	:
-			if get_tree():
-				get_tree().reload_current_scene() # used to be global_position = startpos
-				Globalplayerstate.wavestage = 1
-				Bgmusic.get_child(0).pitch_scale = 1
+		if collision.is_in_group("enemy") and collision:
+			if get_tree() and !oncecollide:
+				Globalplayerstate.abilitybar -= 30 # decreases the bar by 30
+				oncecollide = true
+		else:
+			oncecollide = false
 func changesizewithbar():
 	var changesize: Vector2
 	var scale: float = (Globalplayerstate.abilitybar)/30

@@ -7,7 +7,6 @@ var direction: Vector2
 func _ready() -> void:
 	direction = get_local_mouse_position().normalized()
 	rotate(direction.angle())
-	Globalplayerstate.abilitybar -= 1 # removes percentage for each bullet
 func _process(delta: float) -> void:
 	if timer > 0:
 		timer -= delta
